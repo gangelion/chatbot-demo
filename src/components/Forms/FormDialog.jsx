@@ -43,6 +43,31 @@ export default class FormDialog extends React.Component {
         const name = this.state.name
         const email = this.state.email
         const description = this.state.description
+
+        const payload = {
+                text: `お問い合わせがありました
+                        お名前:${name}
+                        Email:${email}
+                        問い合わせ内容:
+                        ${description}
+                    `
+        }
+
+
+        const url = "https://hooks.slack.com/services/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";
+
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        }).then(() => {
+            alert('送信が完了しました。追ってご連絡します！')
+            this.setState({
+                name: "",
+                email: "",
+                description: ""
+            })
+            return this.props.handleClose();
+        })
     }
 
     render() {
